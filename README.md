@@ -4,7 +4,7 @@ A responsive movie discovery web application built with React and the TMDB API. 
 
 ## 🚀 Live Demo
 
-**Live Demo:** Add your Vercel URL here after deployment.
+**Live Demo:** https://movie-search-app-one-fawn.vercel.app/
 
 **GitHub:** https://github.com/OletiSowmya62/movie-search-app
 
