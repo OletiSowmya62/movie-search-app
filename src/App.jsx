@@ -108,7 +108,7 @@ const App = () => {
     };
 
     loadMovies();
-  }, [searchTerm, currentPage, showFavorites]);
+  }, [searchTerm, currentPage, showFavorites, filters.year, filters.language, filters.rating]);
 
   useEffect(() => {
     localStorage.setItem("movieFavorites", JSON.stringify(favorites));
