@@ -1,6 +1,6 @@
 # 🎬 Movie Explorer
 
-A responsive movie discovery web application built with React and the TMDB API. Users can browse popular movies, search for titles, view detailed movie information, apply filters, sort results, and maintain a personal watchlist.
+A responsive movie discovery web application built with React, TypeScript, and the TMDB API. Users can browse popular movies, search for titles, view detailed movie information, apply filters, sort results, and maintain a personal watchlist.
 
 ## 🚀 Live Demo
 
@@ -41,11 +41,12 @@ A responsive movie discovery web application built with React and the TMDB API. 
 ## 🛠️ Tech Stack
 
 * React
-* JavaScript (ES6+)
+* TypeScript
+* Redux Toolkit and React Redux (watchlist and filter state)
 * Vite
 * Axios
 * React Icons
-* CSS3
+* Tailwind CSS
 * TMDB REST API
 * Browser localStorage
 
@@ -54,25 +55,31 @@ A responsive movie discovery web application built with React and the TMDB API. 
 ```text
 src/
 ├── components/
-│   ├── FilterBar.jsx
-│   ├── Footer.jsx
-│   ├── Loader.jsx
-│   ├── MovieCard.jsx
-│   ├── MovieDetails.jsx
-│   ├── MovieGrid.jsx
-│   ├── Pagination.jsx
-│   └── SearchBar.jsx
+│   ├── FilterBar.tsx
+│   ├── Footer.tsx
+│   ├── Loader.tsx
+│   ├── MovieCard.tsx
+│   ├── MovieDetails.tsx
+│   ├── MovieGrid.tsx
+│   ├── Pagination.tsx
+│   └── SearchBar.tsx
 │
 ├── context/
-│   └── ThemeContext.jsx
+│   └── ThemeContext.tsx
 │
 ├── services/
-│   └── tmdbService.js
+│   └── tmdbService.ts
 │
-├── App.jsx
+├── types/
+│   └── movie.ts
+├── store/
+│   ├── hooks.ts
+│   ├── index.ts
+│   └── watchlistSlice.ts
+├── App.tsx
 ├── App.css
 ├── index.css
-└── main.jsx
+└── main.tsx
 ```
 
 ## ⚙️ Getting Started
@@ -100,7 +107,7 @@ npm install
 Create a `.env` file in the project root:
 
 ```env
-VITE_TMDB_ACCESS_TOKEN=your_tmdb_access_token
+TMDB_ACCESS_TOKEN=your_tmdb_access_token
 ```
 
 The `.env` file is excluded from Git through `.gitignore`.
@@ -115,10 +122,10 @@ Open the local URL shown by Vite.
 
 ## 🔐 Environment Variable
 
-The application uses:
+The server-side TMDB proxy uses:
 
 ```text
-VITE_TMDB_ACCESS_TOKEN
+TMDB_ACCESS_TOKEN
 ```
 
 The token is used to authenticate requests to the TMDB API.
@@ -136,10 +143,10 @@ The application uses TMDB API endpoints for movie data, including:
 API requests are centralized in:
 
 ```text
-src/services/tmdbService.js
+src/services/tmdbService.ts
 ```
 
-This keeps the API logic separate from the UI components.
+This keeps the API logic separate from the UI components. Movie list, details, and pagination responses are modeled in `src/types/movie.ts`, and component props are explicitly typed.
 
 ## 💾 Watchlist
 
@@ -173,6 +180,19 @@ The interface is optimized for:
 
 The movie grid automatically adjusts the number of columns based on screen width.
 
+## 🚦 Lighthouse Results
+
+Audited the deployed [live demo](https://movie-search-app-one-fawn.vercel.app/) with PageSpeed Insights on **November 9, 2026**, using Lighthouse **13.6.0**. These are initial-load lab results; scores and timings may vary between runs.
+
+| Form factor | Performance | Accessibility | Best Practices | SEO | FCP | LCP | TBT | CLS | Speed Index |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| Mobile (Moto G Power, Slow 4G) | 100 | 100 | 100 | 91 | 0.8 s | 0.8 s | 0 ms | 0 | 2.1 s |
+| Desktop (custom throttling) | 100 | 100 | 100 | 91 | 0.2 s | 0.2 s | 0 ms | 0 | 1.1 s |
+
+Reports: [Mobile Lighthouse report](https://pagespeed.web.dev/analysis/https-movie-search-app-one-fawn-vercel-app/6pry1ifqf3?form_factor=mobile) · [Desktop Lighthouse report](https://pagespeed.web.dev/analysis/https-movie-search-app-one-fawn-vercel-app/6pry1ifqf3?form_factor=desktop).
+
+PageSpeed Insights reported no Chrome UX Report (field) data for this URL at audit time, so the scores above are Lighthouse lab measurements only.
+
 ## 🧩 Key React Concepts Demonstrated
 
 This project demonstrates practical use of:
@@ -198,6 +218,18 @@ Create a production build with:
 
 ```bash
 npm run build
+```
+
+Run the TypeScript compiler without emitting files with:
+
+```bash
+npm run typecheck
+```
+
+Run the Jest and React Testing Library suite with:
+
+```bash
+npm test
 ```
 
 The generated production files are placed in:

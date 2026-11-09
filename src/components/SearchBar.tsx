@@ -1,5 +1,12 @@
-const SearchBar = ({ value, onChange }) => {
-  const handleSubmit = (event) => {
+import type { FormEvent } from "react";
+
+interface SearchBarProps {
+  value: string;
+  onChange: (value: string) => void;
+}
+
+const SearchBar = ({ value, onChange }: SearchBarProps) => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
   };
 
@@ -12,10 +19,7 @@ const SearchBar = ({ value, onChange }) => {
         onChange={(event) => onChange(event.target.value)}
         aria-label="Search movies"
       />
-
-      <button type="submit">
-        Search
-      </button>
+      <button type="submit">Search</button>
     </form>
   );
 };

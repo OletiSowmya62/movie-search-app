@@ -1,10 +1,14 @@
 import { FiFilter, FiRotateCcw } from "react-icons/fi";
 
-const FilterBar = ({
-  filters,
-  onFilterChange,
-  onReset,
-}) => {
+import type { AppFilters, FilterKey } from "../types/movie";
+
+interface FilterBarProps {
+  filters: AppFilters;
+  onFilterChange: (key: FilterKey, value: string) => void;
+  onReset: () => void;
+}
+
+const FilterBar = ({ filters, onFilterChange, onReset }: FilterBarProps) => {
   const activeFilterCount = [
     filters.rating,
     filters.year,
@@ -16,31 +20,21 @@ const FilterBar = ({
     <div className="filter-bar">
       <div className="filter-header">
         <div className="filter-heading">
-          <span className="filter-icon">
-            <FiFilter />
-          </span>
+          <span className="filter-icon"><FiFilter /></span>
           <div>
             <strong>Discover</strong>
-            <span>Filter & Sort</span>
+            <span>Filter &amp; Sort</span>
           </div>
         </div>
-
         <div className="filter-summary">
-          {activeFilterCount > 0
-            ? `${activeFilterCount} active`
-            : "No filters"}
+          {activeFilterCount > 0 ? `${activeFilterCount} active` : "No filters"}
         </div>
       </div>
 
       <div className="filter-controls">
         <div className="filter-field">
           <label htmlFor="rating-filter">Rating</label>
-          <select
-            id="rating-filter"
-            value={filters.rating}
-            onChange={(event) => onFilterChange("rating", event.target.value)}
-            aria-label="Filter by rating"
-          >
+          <select id="rating-filter" value={filters.rating} onChange={(event) => onFilterChange("rating", event.target.value)} aria-label="Filter by rating">
             <option value="">Any Rating</option>
             <option value="8">8+ ⭐</option>
             <option value="7">7+ ⭐</option>
@@ -51,12 +45,7 @@ const FilterBar = ({
 
         <div className="filter-field">
           <label htmlFor="year-filter">Year</label>
-          <select
-            id="year-filter"
-            value={filters.year}
-            onChange={(event) => onFilterChange("year", event.target.value)}
-            aria-label="Filter by year"
-          >
+          <select id="year-filter" value={filters.year} onChange={(event) => onFilterChange("year", event.target.value)} aria-label="Filter by year">
             <option value="">Any Year</option>
             <option value="2026">2026</option>
             <option value="2025">2025</option>
@@ -70,12 +59,7 @@ const FilterBar = ({
 
         <div className="filter-field">
           <label htmlFor="language-filter">Language</label>
-          <select
-            id="language-filter"
-            value={filters.language}
-            onChange={(event) => onFilterChange("language", event.target.value)}
-            aria-label="Filter by language"
-          >
+          <select id="language-filter" value={filters.language} onChange={(event) => onFilterChange("language", event.target.value)} aria-label="Filter by language">
             <option value="">Any Language</option>
             <option value="en">English</option>
             <option value="hi">Hindi</option>
@@ -88,12 +72,7 @@ const FilterBar = ({
 
         <div className="filter-field filter-field--wide">
           <label htmlFor="sort-filter">Sort by</label>
-          <select
-            id="sort-filter"
-            value={filters.sort}
-            onChange={(event) => onFilterChange("sort", event.target.value)}
-            aria-label="Sort movies"
-          >
+          <select id="sort-filter" value={filters.sort} onChange={(event) => onFilterChange("sort", event.target.value)} aria-label="Sort movies">
             <option value="default">Default</option>
             <option value="rating-desc">Rating: High to Low</option>
             <option value="rating-asc">Rating: Low to High</option>
@@ -104,12 +83,7 @@ const FilterBar = ({
           </select>
         </div>
 
-        <button
-          className="reset-filter-button"
-          onClick={onReset}
-          title="Reset filters"
-          type="button"
-        >
+        <button className="reset-filter-button" onClick={onReset} title="Reset filters" type="button">
           <FiRotateCcw />
           <span>Reset</span>
         </button>
